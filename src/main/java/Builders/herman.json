@@ -1,0 +1,50 @@
+{
+  "message": {
+    "header": {
+      "receiver": {
+        "networkoperator": "BEN",
+        "serviceprovider": "BEN"
+      },
+      "sender": {
+        "networkoperator": "XENO",
+        "serviceprovider": "XENO"
+      },
+      "timestamp": "20190426093223"
+    },
+    "body": {
+      "portingrequest": {
+        "dossierid": "XENO-12345678",
+        "recipientserviceprovider": "XENO",
+        "recipientnetworkoperator": "XENO",
+        "donornetworkoperator": "BEN",
+        "donorserviceprovider": "BEN",
+        "customerinfo": {
+          "lastname": "Janssen",
+          "companyname": "Bellen BV",
+          "housenr": "12",
+          "housenrext": "B",
+          "postcode": "1234AB",
+          "customerid": "12345678"
+        },
+        "note": "extra info",
+        "repeats": [
+          {
+            "seq": {
+              "numberseries": {
+                "start": "0681901234",
+                "end": "0681901235"
+              },
+              "repeats": [
+                {
+                  "seq": {
+                    "profileid": "12345"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

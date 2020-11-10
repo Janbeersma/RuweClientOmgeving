@@ -1,0 +1,397 @@
+swagger: '2.0'
+info:
+  description: 'descriptie'
+  version: 1.0.0
+  title: COIN CRDB Rest API
+  termsOfService: 'descriptie'
+  contact:
+    name: Vereniging COIN
+    url: 'https://coin.nl/nl/contact'
+    email: servicedesk@coin.nl
+basePath: /
+tags:
+  - name: CRDB REST API
+schemes: []
+paths:
+  /number-portability/v1/dossiers/portingrequest:
+    post:
+      tags:
+        - CRDB REST API
+      summary: Send a porting request
+      description: ''
+      operationId: postPortingRequest
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/PortingRequestEnvelope'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/MessageResponse'
+        '400':
+          description: ill-formed porting message
+          schema:
+            $ref: '#/definitions/ErrorMessages'
+        '401':
+          description: Invalid Hmac
+          schema:
+            $ref: '#/definitions/ErrorMessages'
+        '403':
+          description: Access forbidden
+          schema:
+            $ref: '#/definitions/ErrorMessages'
+definitions:
+  ErrorFoundSeq:
+    type: object
+    required:
+      - description
+      - errorcode
+    properties:
+      phonenumber:
+        type: string
+        pattern: '^[0-9]{1,20}$'
+      errorcode:
+        type: string
+        minLength: 1
+        maxLength: 20
+      description:
+        type: string
+        minLength: 1
+        maxLength: 1000
+  Header:
+    type: object
+    required:
+      - receiver
+      - sender
+      - timestamp
+    properties:
+      receiver:
+        $ref: '#/definitions/Receiver'
+      sender:
+        $ref: '#/definitions/Sender'
+      timestamp:
+        type: string
+        pattern: '^[0-9]{14}$'
+  MessageResponse:
+    type: object
+    required:
+      - transactionId
+    properties:
+      transactionId:
+        type: string
+  NumberSeries:
+    type: object
+    required:
+      - end
+      - start
+    properties:
+      start:
+        type: string
+        pattern: '^[0-9]{1,20}$'
+      end:
+        type: string
+        pattern: '^[0-9]{1,20}$'
+  Sender:
+    type: object
+    required:
+      - networkoperator
+    properties:
+      networkoperator:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      serviceprovider:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+  ErrorFoundBody:
+    type: object
+    required:
+      - errorfound
+    properties:
+      errorfound:
+        $ref: '#/definitions/ErrorFound'
+  CustomerInfo:
+    type: object
+    properties:
+      lastname:
+        type: string
+        minLength: 1
+        maxLength: 70
+      companyname:
+        type: string
+        minLength: 1
+        maxLength: 70
+      housenr:
+        type: string
+        minLength: 1
+        maxLength: 5
+      housenrext:
+        type: string
+        minLength: 1
+        maxLength: 4
+      postcode:
+        type: string
+        pattern: '^[0-9A-Z]{1,6}$'
+      customerid:
+        type: string
+        minLength: 1
+        maxLength: 20
+  ErrorFoundEnvelope:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        $ref: '#/definitions/ErrorFoundMessage'
+  PortingRequest:
+    type: object
+    required:
+      - dossierid
+      - recipientnetworkoperator
+      - repeats
+    properties:
+      dossierid:
+        type: string
+        pattern: '^[-0-9A-Z]{5,26}$'
+      recipientserviceprovider:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      recipientnetworkoperator:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      donornetworkoperator:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      donorserviceprovider:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      customerinfo:
+        $ref: '#/definitions/CustomerInfo'
+      note:
+        type: string
+        maxLength: 100
+      repeats:
+        type: array
+        items:
+          $ref: '#/definitions/PortingRequestRepeats'
+        maxItems: 2147483647
+        minItems: 1
+  ServerSentEvent:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        type: string
+        description: >-
+          A string containing the data in json format. This data can be any
+          <messageType>Envelope described in this Swagger model.
+      event:
+        type: string
+        description: messageType-v1
+      id:
+        type: string
+        description: messageId
+  RangeContent:
+    type: object
+    required:
+      - currentnetworkoperator
+      - dossierid
+      - optanr
+      - planneddatetime
+      - repeats
+    properties:
+      dossierid:
+        type: string
+        pattern: '^[-0-9A-Z]{5,26}$'
+      currentnetworkoperator:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      optanr:
+        type: string
+        pattern: '^[0-9]{1,20}$'
+      planneddatetime:
+        type: string
+        pattern: '^[0-9]{14}$'
+      repeats:
+        type: array
+        items:
+          $ref: '#/definitions/RangeRepeats'
+        maxItems: 2147483647
+        minItems: 1
+  ErrorMessages:
+    type: object
+    required:
+      - errors
+      - transactionId
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorMessage'
+      transactionId:
+        type: string
+  PortingRequestEnvelope:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        $ref: '#/definitions/PortingRequestMessage'
+  PortingRequestBody:
+    type: object
+    required:
+      - portingrequest
+    properties:
+      portingrequest:
+        $ref: '#/definitions/PortingRequest'
+  ErrorFound:
+    type: object
+    required:
+      - dossierid
+      - repeats
+    properties:
+      dossierid:
+        type: string
+        pattern: '^[-0-9A-Z]{5,26}$'
+      repeats:
+        type: array
+        items:
+          $ref: '#/definitions/ErrorFoundRepeats'
+        maxItems: 2147483647
+        minItems: 1
+  PortingRequestMessage:
+    type: object
+    required:
+      - body
+      - header
+    properties:
+      header:
+        $ref: '#/definitions/Header'
+      body:
+        $ref: '#/definitions/PortingRequestBody'
+  ApplicationErrorCode:
+    type: object
+    required:
+      - value
+    properties:
+      value:
+        type: integer
+        format: int32
+    description: |-
+      The following error codes are used:
+      1000 Field validation error
+      1010 Parameter validation error
+      1020 Invalid endpoint error
+      1030 Unsupported media type error
+      6010 Configuration not found error
+      6011 Distribution not found error
+      7030 Jms communication error
+      7040 Database communication error
+      7050 Stream termination error
+      8000 Forbidden error
+      8010 Unauthorized error
+      9000 Json to XML conversion error
+      9999 Unexpected error
+  PortingRequestRepeats:
+    type: object
+    required:
+      - seq
+    properties:
+      seq:
+        $ref: '#/definitions/PortingRequestSeq'
+  ErrorMessage:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        $ref: '#/definitions/ApplicationErrorCode'
+      message:
+        type: string
+  Receiver:
+    type: object
+    required:
+      - networkoperator
+    properties:
+      networkoperator:
+        type: string
+        pattern: '^[0-9A-Z]{3,6}$'
+      serviceprovider:
+        type: string
+
+        pattern: '^[0-9A-Z]{3,6}$'
+  ConfirmationMessage:
+    type: object
+    required:
+      - transactionId
+    properties:
+      transactionId:
+        type: string
+  ErrorFoundRepeats:
+    type: object
+    required:
+      - seq
+    properties:
+      seq:
+        $ref: '#/definitions/ErrorFoundSeq'
+  ErrorFoundMessage:
+    type: object
+    required:
+      - body
+      - header
+    properties:
+      header:
+        $ref: '#/definitions/Header'
+      body:
+        $ref: '#/definitions/ErrorFoundBody'
+  PortingRequestSeq:
+    type: object
+    required:
+      - numberseries
+    properties:
+      numberseries:
+        $ref: '#/definitions/NumberSeries'
+      repeats:
+        type: array
+        items:
+          $ref: '#/definitions/EnumRepeats'
+  EnumRepeats:
+    type: object
+    required:
+      - seq
+    properties:
+      seq:
+        $ref: '#/definitions/EnumProfileSeq'
+  EnumProfileSeq:
+    type: object
+    required:
+      - profileid
+    properties:
+      profileid:
+        type: string
+        pattern: '^[-0-9A-Z]{5,26}$'
+  RangeRepeats:
+    type: object
+    required:
+      - seq
+    properties:
+      seq:
+        $ref: '#/definitions/RangeSeq'
+  RangeSeq:
+    type: object
+    required:
+      - numberseries
+    properties:
+      numberseries:
+        $ref: '#/definitions/NumberSeries'
+      pop:
+        type: string
+
+
+
+
+
