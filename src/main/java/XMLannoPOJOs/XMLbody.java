@@ -1,4 +1,4 @@
-package XMLannoPOJOs;
+/*package XMLannoPOJOs;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "body")
@@ -21,4 +21,4 @@ public class XMLbody {
     public void setPortingrequestmessage(String portingrequestmessage) {
         this.portingrequestmessage = portingrequestmessage;
     }
-}
+}*/

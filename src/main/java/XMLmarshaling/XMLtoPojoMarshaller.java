@@ -1,3 +1,4 @@
+/*
 package XMLmarshaling;
 
 import XMLannoPOJOs.XMLmessage;
@@ -25,4 +26,4 @@ public class XMLtoPojoMarshaller {
         }
 
     }
-}
+}*/
