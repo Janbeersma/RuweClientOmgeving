@@ -1,3 +1,4 @@
+/*
 package XMLannoPOJOs;
 import javax.xml.bind.annotation.*;
 import java.util.UUID;
@@ -36,3 +37,4 @@ public class XMLmessage {
         this.body = body;
     }
 }
+*/
