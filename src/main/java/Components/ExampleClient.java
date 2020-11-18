@@ -1,6 +1,7 @@
 package Components;
 
 import POJOs.*;
+import POJOs.CustomerInfo;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.*;
@@ -9,19 +10,88 @@ import javax.ws.rs.core.Response;
 
 @Component
 public class ExampleClient {
-    Client client = ClientBuilder.newClient();
-    WebTarget webTarget = client.target("https://mbygpk4ss2.execute-api.us-east-1.amazonaws.com/test/number-portability/v1/dossiers").path("portingrequest");
+    private Client client;
+    private WebTarget webTarget;
 
-    //CustomerInfoSetters
-    CustomerInfo customerInfo = new CustomerInfo();
-        customerInfo.setLastname("Bergrit Haards van Duinen");
-        customerInfo.setCompanyname("Ben");
-        customerInfo.setHousenr("69");
-        customerInfo.setHousenrext("b");
-        customerInfo.setCustomerid("445412456");
+    public ExampleClient() {
+    }
 
-    //PortingRequestSetters
-    PortingRequest portingRequest = new PortingRequest();
+    public ExampleClient(Client client, WebTarget webTarget) {
+        this.client = client;
+        this.webTarget = webTarget;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public WebTarget getWebTarget() {
+        return webTarget;
+    }
+
+    public void setWebTarget(WebTarget webTarget) {
+        this.webTarget = webTarget;
+    }
+
+    public void Classbuilder() {
+        Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target("https://mbygpk4ss2.execute-api.us-east-1.amazonaws.com/test/number-portability/v1/dossiers").path("portingrequest");
+
+        //CustomerInfoSetters
+        CustomerInfo customerInfo = CustomerInfoCreator();
+
+        //PortingRequestSetters
+        PortingRequest portingRequest = PortingRequestCreator(customerInfo);
+
+        //body setters
+        PortingRequestBody body = PortingRequestBodyCreator(portingRequest);
+
+        //message setters
+        PortingRequestMessage message = PortingRequestMessageCreator(body);
+
+        //PortingrequestEnvelope setters
+        PortEnv portEnv = PortEnvCreator(message);
+
+        //InvocationBuilder
+        Invocation.Builder invb = InvocationBuilderCreator(webTarget);
+
+        //Postrequest
+        PortenvelopePost(portEnv, invb);
+
+    }
+
+    private void PortenvelopePost(PortEnv portEnv, Invocation.Builder invb) {
+        Response response = invb.post(Entity.entity(portEnv, MediaType.APPLICATION_JSON_TYPE));
+    }
+
+    private Invocation.Builder InvocationBuilderCreator(WebTarget webTarget) {
+        Invocation.Builder invb = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
+        return invb;
+    }
+
+    private PortEnv PortEnvCreator(PortingRequestMessage message) {
+        PortEnv portEnv = new PortEnv(15, "portforwarding", message);
+        return portEnv;
+    }
+
+    private PortingRequestBody PortingRequestBodyCreator(PortingRequest portingRequest) {
+        PortingRequestBody body = new PortingRequestBody();
+        body.setPortingRequest(portingRequest);
+        return body;
+    }
+
+    private PortingRequestMessage PortingRequestMessageCreator(PortingRequestBody body) {
+        PortingRequestMessage message = new PortingRequestMessage();
+        message.setBody(body);
+        return message;
+    }
+
+    private PortingRequest PortingRequestCreator(CustomerInfo customerInfo) {
+        PortingRequest portingRequest = new PortingRequest();
         portingRequest.setDossierId("15235453");
         portingRequest.setRecipientserviceprovider("BBB");
         portingRequest.setRecipientnetworkoperator("BBB");
@@ -29,20 +99,18 @@ public class ExampleClient {
         portingRequest.setDonorserviceprovider("AAA");
         portingRequest.setCustomerInfo(customerInfo);
         portingRequest.setNotes("dit zijn notities");
-    //portingRequest.setRepeats();
+        return portingRequest;
+    }
 
-    //body setters
-    PortingRequestBody body = new PortingRequestBody();
-        body.setPortingRequest(portingRequest);
-
-    PortingRequestMessage message = new PortingRequestMessage();
-        message.setBody(body);
-
-    PortEnv portEnv = new PortEnv(15,"portforwarding", message);
-
-
-    Invocation.Builder invb = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
-    Response response = invb.post(Entity.entity(portEnv, MediaType.APPLICATION_JSON_TYPE));
+    private CustomerInfo CustomerInfoCreator() {
+        CustomerInfo customerInfo = new CustomerInfo();
+        customerInfo.setLastname("Bergrit Haards van Duinen");
+        customerInfo.setCompanyname("Ben");
+        customerInfo.setHousenr("69");
+        customerInfo.setHousenrext("b");
+        customerInfo.setCustomerid("445412456");
+        return customerInfo;
+    }
 }
 
 

@@ -25,16 +25,13 @@ public class PortEnv {
         return id;
     }
 
-
     public void setId(int id) {
         this.id = id;
     }
 
-
     public String getPortingName() {
         return portingName;
     }
-
 
     public void setPortingName(String portingName) {
         this.portingName = portingName;
