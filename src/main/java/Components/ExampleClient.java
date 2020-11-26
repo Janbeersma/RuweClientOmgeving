@@ -68,17 +68,17 @@ public class ExampleClient {
         Response response = invb.post(Entity.entity(portEnv, MediaType.APPLICATION_JSON_TYPE));
     }
 
-    private Invocation.Builder InvocationBuilderCreator(WebTarget webTarget) {
+    public Invocation.Builder InvocationBuilderCreator(WebTarget webTarget) {
         Invocation.Builder invb = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
         return invb;
     }
 
-    private PortEnv PortEnvCreator(PortingRequestMessage message) {
-        PortEnv portEnv = new PortEnv(15, "portforwarding", message);
+    public PortEnv PortEnvCreator(PortingRequestMessage message) {
+        PortEnv portEnv = new PortEnv("15", "portforwarding", message);
         return portEnv;
     }
 
-    private PortingRequestBody PortingRequestBodyCreator(PortingRequest portingRequest) {
+    public PortingRequestBody PortingRequestBodyCreator(PortingRequest portingRequest) {
         PortingRequestBody body = new PortingRequestBody();
         body.setPortingRequest(portingRequest);
         return body;
@@ -90,7 +90,7 @@ public class ExampleClient {
         return message;
     }
 
-    private PortingRequest PortingRequestCreator(CustomerInfo customerInfo) {
+    public PortingRequest PortingRequestCreator(CustomerInfo customerInfo) {
         PortingRequest portingRequest = new PortingRequest();
         portingRequest.setDossierId("15235453");
         portingRequest.setRecipientserviceprovider("BBB");
@@ -102,12 +102,13 @@ public class ExampleClient {
         return portingRequest;
     }
 
-    private CustomerInfo CustomerInfoCreator() {
+    public CustomerInfo CustomerInfoCreator() {
         CustomerInfo customerInfo = new CustomerInfo();
         customerInfo.setLastname("Bergrit Haards van Duinen");
         customerInfo.setCompanyname("Ben");
         customerInfo.setHousenr("69");
         customerInfo.setHousenrext("b");
+        customerInfo.setPostcode("6441GS");
         customerInfo.setCustomerid("445412456");
         return customerInfo;
     }
