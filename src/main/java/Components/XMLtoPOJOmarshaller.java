@@ -32,6 +32,10 @@ public class XMLtoPOJOmarshaller {
         JAXBContext jaxbContext = JAXBContext.newInstance(Message.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         message = (Message) unmarshaller.unmarshal(xmlMessage);
-        System.out.println(message);
+        System.out.println(message.getId());
+        System.out.println(message.getTest());
+        System.out.println(message.getBody().getNestTest());
+        System.out.println(message.getBody().getPortingrequest().getV2().getDossierid());
+        System.out.println(message.getBody().getPortingrequest().getV2().getCustomerinfo().getCompanyname());
     }
 }
