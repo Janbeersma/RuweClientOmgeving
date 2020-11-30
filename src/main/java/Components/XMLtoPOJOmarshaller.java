@@ -27,15 +27,16 @@ public class XMLtoPOJOmarshaller {
         this.message = message;
     }
 
-    public void marshalintoClass() throws JAXBException, FileNotFoundException {
+    public Message marshalintoClass() throws JAXBException, FileNotFoundException {
         File xmlMessage = new File("C:\\Users\\Florian.Romijn\\Desktop\\spring-boot\\spring-boot\\src\\main\\resources\\static\\message.xml");
         JAXBContext jaxbContext = JAXBContext.newInstance(Message.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         message = (Message) unmarshaller.unmarshal(xmlMessage);
-        System.out.println(message.getId());
-        System.out.println(message.getTest());
-        System.out.println(message.getBody().getNestTest());
-        System.out.println(message.getBody().getPortingrequest().getV2().getDossierid());
-        System.out.println(message.getBody().getPortingrequest().getV2().getCustomerinfo().getCompanyname());
+        return message;
+        //System.out.println(message.getId());
+        //System.out.println(message.getTest());
+        //System.out.println(message.getBody().getNestTest());
+        //System.out.println(message.getBody().getPortingrequest().getV2().getDossierid());
+        //System.out.println(message.getBody().getPortingrequest().getV2().getCustomerinfo().getCompanyname());
     }
 }

@@ -1,3 +1,4 @@
+/*
 package Components;
 
 import org.junit.jupiter.api.Test;
@@ -23,3 +24,4 @@ class XMLtoPOJOmarshallerTest {
 
     }
 }
+*/
