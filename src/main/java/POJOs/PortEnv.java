@@ -7,25 +7,25 @@ import javax.json.bind.annotation.JsonbPropertyOrder;
 public class PortEnv {
 
     @JsonbProperty("id")
-    public int id;
+    public String id;
     @JsonbProperty("portingName")
     public String portingName;
     @JsonbProperty("message")
     public PortingRequestMessage message;
 
-    public PortEnv() {}
+    public PortEnv(int i, String portforwarding, PortingRequestMessage message) {}
 
-    public PortEnv(int id, String portingName, PortingRequestMessage message) {
+    public PortEnv(String id, String portingName, PortingRequestMessage message) {
         this.id = id;
         this.portingName = portingName;
         this.message = message;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

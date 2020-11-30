@@ -1,0 +1,24 @@
+<Message>
+    <id>12345</id>
+    <test>Hallo dit is een test</test>
+    <body>
+        <nestTest>dit is een genestte test</nestTest>
+        <portingrequest>
+            <v2>
+                <dossierid>213854685</dossierid>
+                <recipientserviceprovider>AAA</recipientserviceprovider>
+                <recipientnetworkoperator>AAA</recipientnetworkoperator>
+                <donornetworkoperator>BBB</donornetworkoperator>
+                <donorserviceprovider>BBB</donorserviceprovider>
+                <note>dit is een notitie</note>
+                <customerinfo>
+                    <lastname>dit is een achternaam</lastname>
+                    <companyname>dit is een companyname</companyname>
+                    <housenr>31</housenr>
+                    <postcode>2</postcode>
+                    <customerid>21313231</customerid>
+                </customerinfo>
+            </v2>
+        </portingrequest>
+    </body>
+</Message>
