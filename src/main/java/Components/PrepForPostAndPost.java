@@ -2,7 +2,6 @@ package Components;
 
 import POJOs.*;
 import POJOs.CustomerInfo;
-import XMLPOJOs.CustomerInfoXML;
 import XMLPOJOs.Message;
 import XMLPOJOs.PortingRequestV2;
 import org.springframework.stereotype.Component;
@@ -10,12 +9,10 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class PrepForPostAndPost {
-    private Client client;
+    private static Client client;
     private WebTarget webTarget;
 
     public PrepForPostAndPost() {
@@ -43,7 +40,7 @@ public class PrepForPostAndPost {
     }
 
     public void PrepAndPost(Message unmarshalledXMLmessage) {
-        Client client = ClientBuilder.newClient();
+        Client client = getClientInstance();
         WebTarget webTarget = client.target("https://mbygpk4ss2.execute-api.us-east-1.amazonaws.com/test/number-portability/v1/dossiers").path("portingrequest");
 
         //CustomerInfoSetters
@@ -69,26 +66,11 @@ public class PrepForPostAndPost {
 
     }
 
-    public List<String> XMLdataToString(Message message) {
-        CustomerInfoXML customerInfoXML = new CustomerInfoXML();
-        String xmlLastname = message.getBody().getPortingrequest().getV2().getCustomerinfo().getLastname();
-        String xmlCompanyname = message.getBody().getPortingrequest().getV2().getCustomerinfo().getCompanyname();
-        String xmlHousenr = message.getBody().getPortingrequest().getV2().getCustomerinfo().getHousenr();
-        String xmlHousenrext = message.getBody().getPortingrequest().getV2().getCustomerinfo().getGetHousenrext();
-        String xmlPostcode = message.getBody().getPortingrequest().getV2().getCustomerinfo().getPostcode();
-        String xmlCustomerid = message.getBody().getPortingrequest().getV2().getCustomerinfo().getCustomerid();
-        List<String> xmlCustomerdata = new ArrayList<String>();
-        xmlCustomerdata.add(xmlLastname);
-        xmlCustomerdata.add(xmlCompanyname);
-        xmlCustomerdata.add(xmlHousenr);
-        xmlCustomerdata.add(xmlHousenrext);
-        xmlCustomerdata.add(xmlPostcode);
-        xmlCustomerdata.add(xmlCustomerid);
-        for (int x = 0; x < xmlCustomerdata.size(); x++) {
-            System.out.println(xmlCustomerdata.get(x));
+    public static Client getClientInstance() {
+        if (client == null) {
+            client = ClientBuilder.newClient();
         }
-        return xmlCustomerdata;
-
+        return client;
     }
 
     private void PortenvelopePost(PortEnv portEnv, Invocation.Builder invb) {
@@ -135,7 +117,7 @@ public class PrepForPostAndPost {
         customerInfo.setLastname(message.getBody().getPortingrequest().getV2().getCustomerinfo().getLastname());
         customerInfo.setCompanyname(message.getBody().getPortingrequest().getV2().getCustomerinfo().getCompanyname());
         customerInfo.setHousenr(message.getBody().getPortingrequest().getV2().getCustomerinfo().getHousenr());
-        customerInfo.setHousenrext(message.getBody().getPortingrequest().getV2().getCustomerinfo().getGetHousenrext());
+        customerInfo.setHousenrext(message.getBody().getPortingrequest().getV2().getCustomerinfo().getHousenrext());
         customerInfo.setPostcode(message.getBody().getPortingrequest().getV2().getCustomerinfo().getPostcode());
         customerInfo.setCustomerid(message.getBody().getPortingrequest().getV2().getCustomerinfo().getCustomerid());
         return customerInfo;

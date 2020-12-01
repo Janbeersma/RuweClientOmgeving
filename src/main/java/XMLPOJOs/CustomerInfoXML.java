@@ -37,11 +37,11 @@ public class CustomerInfoXML {
         this.housenr = housenr;
     }
 
-    public String getGetHousenrext() {
+    public String getHousenrext() {
         return getHousenrext;
     }
 
-    public void setGetHousenrext(String getHousenrext) {
+    public void setHousenrext(String getHousenrext) {
         this.getHousenrext = getHousenrext;
     }
 
