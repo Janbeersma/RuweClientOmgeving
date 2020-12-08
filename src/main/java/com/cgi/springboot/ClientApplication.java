@@ -5,6 +5,8 @@ import Components.XMLtoPOJOmarshaller;
 import XMLPOJOs.Message;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,11 +19,11 @@ import java.io.FileNotFoundException;
 public class ClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ClientApplication.class, args);
-		XMLtoPOJOmarshaller xmLtoPOJOmarshaller = new XMLtoPOJOmarshaller();
+		ConfigurableApplicationContext context = SpringApplication.run(ClientApplication.class, args);
+		XMLtoPOJOmarshaller xmLtoPOJOmarshaller = context.getBean(XMLtoPOJOmarshaller.class);
 		try {
 			Message unmarshalledXMLmessage = xmLtoPOJOmarshaller.marshalintoClass();
-			PrepForPostAndPost prepForPostAndPost = new PrepForPostAndPost();
+			PrepForPostAndPost prepForPostAndPost = context.getBean(PrepForPostAndPost.class);
 			prepForPostAndPost.PrepAndPost(unmarshalledXMLmessage);
 
 		} catch (JAXBException e) {

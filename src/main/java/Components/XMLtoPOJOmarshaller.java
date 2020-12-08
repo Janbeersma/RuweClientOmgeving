@@ -1,6 +1,7 @@
 package Components;
 
 import XMLPOJOs.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -11,6 +12,7 @@ import java.io.FileNotFoundException;
 
 @Component
 public class XMLtoPOJOmarshaller {
+    @Autowired
     Message message;
 
     public XMLtoPOJOmarshaller() {}

@@ -18,6 +18,7 @@ public class PrepForPostAndPost {
     public PrepForPostAndPost() {
     }
 
+
     public PrepForPostAndPost(Client client, WebTarget webTarget) {
         this.client = client;
         this.webTarget = webTarget;
@@ -101,14 +102,13 @@ public class PrepForPostAndPost {
 
     public PortingRequest PortingRequestCreator(CustomerInfo customerInfo, Message message) {
         PortingRequest portingRequest = new PortingRequest();
-        PortingRequestV2 v2 = new PortingRequestV2();
         portingRequest.setDossierId(message.getBody().getPortingrequest().getV2().getDossierid());
         portingRequest.setRecipientserviceprovider(message.getBody().getPortingrequest().getV2().getRecipientserviceprovider());
         portingRequest.setRecipientnetworkoperator(message.getBody().getPortingrequest().getV2().getRecipientnetworkoperator());
         portingRequest.setDonornetworkoperator(message.getBody().getPortingrequest().getV2().getDonornetworkoperator());
         portingRequest.setDonorserviceprovider(message.getBody().getPortingrequest().getV2().getDonorserviceprovider());
         portingRequest.setCustomerInfo(customerInfo);
-        portingRequest.setNotes(v2.getNote());
+        portingRequest.setNotes(message.getBody().getPortingrequest().getV2().getNote());
         return portingRequest;
     }
 
