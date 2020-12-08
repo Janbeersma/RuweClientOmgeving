@@ -52,8 +52,17 @@ public class PrepForPostAndPost {
         //body setters
         PortingRequestBody body = PortingRequestBodyCreator(portingRequest);
 
+        //Receiverdata overzetten naar JSON geannoteerde class
+        PortingRequestReceiver receiver = ReceiverCreator(unmarshalledXMLmessage);
+
+        //Senderdata overzetten naar JSON geannoteerde class
+        PortingRequestSender sender = SenderCreator(unmarshalledXMLmessage);
+
+        //Headerdata overzetten naar JSON geannoteerde class
+        PortingRequestHeader header = PortingRequestHeaderCreator(unmarshalledXMLmessage, receiver, sender);
+
         //message setters
-        PortingRequestMessage message = PortingRequestMessageCreator(body);
+        PortingRequestMessage message = PortingRequestMessageCreator(body, header);
 
         //PortingrequestEnvelope setters
         PortEnv portEnv = PortEnvCreator(message);
@@ -66,6 +75,7 @@ public class PrepForPostAndPost {
 
     }
 
+    //Singleton voor de client
     public static Client getClientInstance() {
         if (client == null) {
             client = ClientBuilder.newClient();
@@ -87,15 +97,38 @@ public class PrepForPostAndPost {
         return portEnv;
     }
 
+    public PortingRequestReceiver ReceiverCreator(Message message) {
+        PortingRequestReceiver receiver = new PortingRequestReceiver();
+        receiver.setNetworkoperator(message.getHeader().getReceiver().getNetworkoperator());
+        receiver.setServiceprovider(message.getHeader().getReceiver().getServiceprovider());
+        return receiver;
+    }
+
+    public PortingRequestSender SenderCreator(Message message) {
+        PortingRequestSender sender = new PortingRequestSender();
+        sender.setNetworkoperator(message.getHeader().getSender().getNetworkoperator());
+        sender.setServiceprovider(message.getHeader().getSender().getServiceprovider());
+        return sender;
+    }
+
+    public PortingRequestHeader PortingRequestHeaderCreator(Message message, PortingRequestReceiver receiver, PortingRequestSender sender) {
+        PortingRequestHeader header = new PortingRequestHeader();
+        header.setReceiver(receiver);
+        header.setSender(sender);
+        header.setTimestamp(message.getHeader().getTimestamp());
+        return header;
+    }
+
     public PortingRequestBody PortingRequestBodyCreator(PortingRequest portingRequest) {
         PortingRequestBody body = new PortingRequestBody();
         body.setPortingRequest(portingRequest);
         return body;
     }
 
-    private PortingRequestMessage PortingRequestMessageCreator(PortingRequestBody body) {
+    private PortingRequestMessage PortingRequestMessageCreator(PortingRequestBody body, PortingRequestHeader header) {
         PortingRequestMessage message = new PortingRequestMessage();
         message.setBody(body);
+        message.setHeader(header);
         return message;
     }
 

@@ -9,13 +9,15 @@ public class Message {
     int id;
     String test;
     Body body;
+    Header header;
 
     public Message() {}
 
-    public Message(int id, String test, Body body) {
+    public Message(int id, String test, Body body, Header header) {
         this.id = id;
         this.test = test;
         this.body = body;
+        this.header = header;
     }
 
     public int getId() {
@@ -40,5 +42,13 @@ public class Message {
 
     public void setBody(Body body) {
         this.body = body;
+    }
+
+    public Header getHeader() {
+        return header;
+    }
+
+    public void setHeader(Header header) {
+        this.header = header;
     }
 }

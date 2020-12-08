@@ -21,4 +21,16 @@
             </v2>
         </portingrequest>
     </body>
+    <header>
+        <test>dit is een headertest</test>
+        <receiver>
+            <networkoperator>AAA</networkoperator>
+            <serviceprovider>BBB</serviceprovider>
+        </receiver>
+        <sender>
+            <networkoperator>CCC</networkoperator>
+            <serviceprovider>DDD</serviceprovider>
+        </sender>
+        <timestamp>123456789</timestamp>
+    </header>
 </Message>
