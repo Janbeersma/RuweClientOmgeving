@@ -3,7 +3,8 @@ package POJOs;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"lastname",
+@JsonbPropertyOrder({
+        "lastname",
         "companyname",
         "housenr",
         "housenrext",

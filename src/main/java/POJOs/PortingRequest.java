@@ -2,6 +2,8 @@ package POJOs;
 
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonbPropertyOrder({"dossierId",
         "recipientserviceprovider",
@@ -26,12 +28,12 @@ public class PortingRequest {
     public CustomerInfo customerInfo;
     @JsonbProperty("notes")
     public String notes;
-    //@JsonbProperty("repeats")
-    //public Repeats repeats;
+    @JsonbProperty("repeats")
+    public PortingRequest .Repeats repeats;
 
     public PortingRequest() {}
 
-    public PortingRequest(String dossierId, String recipientserviceprovider, String recipientnetworkoperator, String donornetworkoperator, String donorserviceprovider, CustomerInfo customerInfo, String notes/*, Repeats repeats*/) {
+    public PortingRequest(String dossierId, String recipientserviceprovider, String recipientnetworkoperator, String donornetworkoperator, String donorserviceprovider, CustomerInfo customerInfo, String notes, Repeats repeats) {
         this.dossierId = dossierId;
         this.recipientserviceprovider = recipientserviceprovider;
         this.recipientnetworkoperator = recipientnetworkoperator;
@@ -39,7 +41,7 @@ public class PortingRequest {
         this.donorserviceprovider = donorserviceprovider;
         this.customerInfo = customerInfo;
         this.notes = notes;
-        //this.repeats = repeats;
+        this.repeats = repeats;
     }
 
     public String getDossierId() {
@@ -89,11 +91,7 @@ public class PortingRequest {
     public void setCustomerInfo(CustomerInfo customerInfo) {
         this.customerInfo = customerInfo;
     }
-/*
-    public Repeats getRepeats() {
-        return repeats;
-    }
-*/
+
     public String getNotes() {
         return notes;
     }
@@ -101,8 +99,24 @@ public class PortingRequest {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-/*
-    public void setRepeats(Repeats repeats) {
+
+    public PortingRequest.Repeats getRepeats() {
+        return repeats;
+    }
+
+    public void setRepeats(PortingRequest.Repeats repeats) {
         this.repeats = repeats;
-    }*/
+    }
+
+    public static class Repeats {
+        @JsonbProperty("seq")
+        protected List<PortingRequestSequence> seq;
+
+        public List<PortingRequestSequence> getSeq() {
+            if (seq == null) {
+                seq = new ArrayList<PortingRequestSequence>();
+            }
+            return this.seq;
+        }
+    }
 }

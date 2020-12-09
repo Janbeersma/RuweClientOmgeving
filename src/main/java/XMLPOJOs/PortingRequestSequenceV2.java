@@ -1,23 +1,19 @@
-package POJOs;
+package XMLPOJOs;
 
-import XMLPOJOs.Numberseries;
-
-import javax.json.bind.annotation.JsonbProperty;
-import javax.json.bind.annotation.JsonbPropertyOrder;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonbPropertyOrder({
+@XmlRootElement(name = "portingrequestsequencev2")
+@XmlType(name = "portingrequestsequencev2", propOrder = {
         "numberseries",
         "repeats"
 })
-public class PortingRequestSequence {
-    @JsonbProperty("numberseries")
+public class PortingRequestSequenceV2 {
     protected Numberseries numberseries;
-    @JsonbProperty("repeats")
-    protected PortingRequestSequence .Repeats repeats;
+    protected PortingRequestSequenceV2 .Repeats repeats;
 
-    public PortingRequestSequence() {}
+    public PortingRequestSequenceV2() {}
 
     public Numberseries getNumberseries() {
         return numberseries;
@@ -27,16 +23,19 @@ public class PortingRequestSequence {
         this.numberseries = numberseries;
     }
 
-    public PortingRequestSequence.Repeats getRepeats() {
+    public Repeats getRepeats() {
         return repeats;
     }
 
-    public void setRepeats(PortingRequestSequence.Repeats repeats) {
-        this.repeats = repeats;
+    public void setRepeats(PortingRequestSequenceV2.Repeats value) {
+        this.repeats = value;
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+            "seq"
+    })
     public static class Repeats {
-        @JsonbProperty("seq")
         protected List<EnumProfileSequence> seq;
 
         public List<EnumProfileSequence> getSeq() {
@@ -45,5 +44,6 @@ public class PortingRequestSequence {
             }
             return this.seq;
         }
+
     }
 }

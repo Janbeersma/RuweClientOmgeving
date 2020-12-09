@@ -3,7 +3,10 @@ package POJOs;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"receiver", "sender", "timestamp"})
+@JsonbPropertyOrder({
+        "receiver",
+        "sender",
+        "timestamp"})
 public class PortingRequestHeader {
     @JsonbProperty("receiver")
     public PortingRequestReceiver receiver;

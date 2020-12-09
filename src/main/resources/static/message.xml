@@ -6,8 +6,8 @@
         <portingrequest>
             <v2>
                 <dossierid>213854685</dossierid>
-                <recipientserviceprovider>AAA</recipientserviceprovider>
                 <recipientnetworkoperator>AAA</recipientnetworkoperator>
+                <recipientserviceprovider>AAA</recipientserviceprovider>
                 <donornetworkoperator>BBB</donornetworkoperator>
                 <donorserviceprovider>BBB</donorserviceprovider>
                 <note>dit is een notitie</note>
@@ -18,6 +18,19 @@
                     <postcode>2</postcode>
                     <customerid>21313231</customerid>
                 </customerinfo>
+                <repeats>
+                    <seq>
+                        <numberseries>
+                            <start>065497821</start>
+                            <end>06745632180</end>
+                        </numberseries>
+                        <repeats>
+                            <seq>
+                                <profileid>1235456</profileid>
+                            </seq>
+                        </repeats>
+                    </seq>
+                </repeats>
             </v2>
         </portingrequest>
     </body>

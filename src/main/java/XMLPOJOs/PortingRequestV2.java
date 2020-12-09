@@ -1,10 +1,21 @@
 package XMLPOJOs;
 
-import javax.xml.bind.annotation.XmlRootElement;
+
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement(name = "v2")
+@XmlType(name = "v2", propOrder = {
+        "dossierid",
+        "recipientnetworkoperator",
+        "recipientserviceprovider",
+        "donornetworkoperator",
+        "donorserviceprovider",
+        "customerinfo",
+        "note",
+        "repeats"})
 public class PortingRequestV2 {
-
     String dossierid;
     String recipientserviceprovider;
     String recipientnetworkoperator;
@@ -12,6 +23,8 @@ public class PortingRequestV2 {
     String donorserviceprovider;
     String note;
     CustomerInfoXML customerinfo;
+    PortingRequestV2 .Repeats repeats;
+
 
     public PortingRequestV2() {}
 
@@ -70,4 +83,29 @@ public class PortingRequestV2 {
     public void setCustomerinfo(CustomerInfoXML customerinfo) {
         this.customerinfo = customerinfo;
     }
+
+    public PortingRequestV2.Repeats getRepeats() {
+        return repeats;
+    }
+
+    public void setRepeats(PortingRequestV2.Repeats value) {
+        this.repeats = value;
+    }
+
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "repeats", propOrder = "seq")
+    public static class Repeats {
+
+        @XmlElement(required = true)
+        protected List<PortingRequestSequenceV2> seq;
+
+        public List<PortingRequestSequenceV2> getSeq() {
+            if (seq == null) {
+                seq = new ArrayList<PortingRequestSequenceV2>();
+            }
+            return this.seq;
+        }
+    }
 }
+
+

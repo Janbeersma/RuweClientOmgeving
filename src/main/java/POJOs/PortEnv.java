@@ -3,7 +3,10 @@ package POJOs;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"id","portingName","message"})
+@JsonbPropertyOrder({
+        "id",
+        "portingName",
+        "message"})
 public class PortEnv {
 
     @JsonbProperty("id")

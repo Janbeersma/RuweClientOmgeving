@@ -3,12 +3,14 @@ package Components;
 import POJOs.*;
 import POJOs.CustomerInfo;
 import XMLPOJOs.Message;
+import XMLPOJOs.PortingRequestSequenceV2;
 import XMLPOJOs.PortingRequestV2;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Component
 public class PrepForPostAndPost {
@@ -45,6 +47,12 @@ public class PrepForPostAndPost {
 
         //CustomerInfoSetters
         CustomerInfo customerInfo = CustomerInfoCreator(unmarshalledXMLmessage);
+
+        //PortingRequestRepeats setters
+//        PortingRequest.Repeats repeats = PortingRequestRepeatsCreator(unmarshalledXMLmessage);
+
+        //EnumProfileSequence
+        EnumProfileSequence enumProfileSequence = EnumProfileSequenceCreator(unmarshalledXMLmessage);
 
         //PortingRequestSetters
         PortingRequest portingRequest = PortingRequestCreator(customerInfo, unmarshalledXMLmessage);
@@ -143,6 +151,20 @@ public class PrepForPostAndPost {
         portingRequest.setCustomerInfo(customerInfo);
         portingRequest.setNotes(v2.getNote());
         return portingRequest;
+    }
+
+//    public PortingRequest.Repeats PortingRequestRepeatsCreator(Message message) {
+//        PortingRequest.Repeats repeats = new PortingRequest.Repeats();
+//    }
+
+    public EnumProfileSequence EnumProfileSequenceCreator(Message message) {
+        EnumProfileSequence enumProfileSequence = new EnumProfileSequence();
+        List<PortingRequestSequenceV2> portseqList = message.getBody().getPortingrequest().getV2().getRepeats().getSeq();
+        PortingRequestSequenceV2 portseqv2 = portseqList.get(0);
+        List<XMLPOJOs.EnumProfileSequence> enumseqlist = portseqv2.getRepeats().getSeq();
+        XMLPOJOs.EnumProfileSequence enumseq = enumseqlist.get(0);
+        enumProfileSequence.setProfileid(enumseq.getProfileid());
+        return enumProfileSequence;
     }
 
     public CustomerInfo CustomerInfoCreator(Message message) {
