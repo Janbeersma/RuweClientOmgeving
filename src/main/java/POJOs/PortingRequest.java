@@ -33,17 +33,6 @@ public class PortingRequest {
 
     public PortingRequest() {}
 
-    public PortingRequest(String dossierId, String recipientserviceprovider, String recipientnetworkoperator, String donornetworkoperator, String donorserviceprovider, CustomerInfo customerInfo, String notes, Repeats repeats) {
-        this.dossierId = dossierId;
-        this.recipientserviceprovider = recipientserviceprovider;
-        this.recipientnetworkoperator = recipientnetworkoperator;
-        this.donornetworkoperator = donornetworkoperator;
-        this.donorserviceprovider = donorserviceprovider;
-        this.customerInfo = customerInfo;
-        this.notes = notes;
-        this.repeats = repeats;
-    }
-
     public String getDossierId() {
         return dossierId;
     }
@@ -108,6 +97,7 @@ public class PortingRequest {
         this.repeats = repeats;
     }
 
+
     public static class Repeats {
         @JsonbProperty("seq")
         protected List<PortingRequestSequence> seq;
@@ -117,6 +107,10 @@ public class PortingRequest {
                 seq = new ArrayList<PortingRequestSequence>();
             }
             return this.seq;
+        }
+
+        public void setSeq(List<PortingRequestSequence> seq) {
+            this.seq = seq;
         }
     }
 }
