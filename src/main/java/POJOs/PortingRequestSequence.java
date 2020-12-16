@@ -45,5 +45,9 @@ public class PortingRequestSequence {
             }
             return this.seq;
         }
+
+        public void setSeq(List<EnumProfileSequence> seq) {
+            this.seq = seq;
+        }
     }
 }

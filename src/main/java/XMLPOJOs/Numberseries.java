@@ -20,7 +20,7 @@ public class Numberseries {
     }
 
     public void setStart(String start) {
-        start = start;
+        this.start = start;
     }
 
     public String getEnd() {
