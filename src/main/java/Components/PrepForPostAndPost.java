@@ -56,7 +56,7 @@ public class PrepForPostAndPost {
         EnumProfileSequence enumProfileSequence = EnumProfileSequenceCreator(unmarshalledXMLmessage);
 
         //PortingRequestSetters
-        PortingRequest portingRequest = PortingRequestCreator(customerInfo, unmarshalledXMLmessage);
+        PortingRequest portingRequest = PortingRequestCreator(customerInfo, unmarshalledXMLmessage, repeats);
 
         //body setters
         PortingRequestBody body = PortingRequestBodyCreator(portingRequest);
@@ -141,7 +141,7 @@ public class PrepForPostAndPost {
         return message;
     }
 
-    public PortingRequest PortingRequestCreator(CustomerInfo customerInfo, Message message) {
+    public PortingRequest PortingRequestCreator(CustomerInfo customerInfo, Message message, PortingRequest.Repeats repeats) {
         PortingRequest portingRequest = new PortingRequest();
         PortingRequestV2 v2 = new PortingRequestV2();
         portingRequest.setDossierId(message.getBody().getPortingrequest().getV2().getDossierid());
@@ -151,6 +151,7 @@ public class PrepForPostAndPost {
         portingRequest.setDonorserviceprovider(message.getBody().getPortingrequest().getV2().getDonorserviceprovider());
         portingRequest.setCustomerInfo(customerInfo);
         portingRequest.setNotes(v2.getNote());
+        portingRequest.setRepeats(repeats);
         return portingRequest;
     }
 
@@ -160,6 +161,7 @@ public class PrepForPostAndPost {
         PortingRequestSequence.Repeats portSeqRepeats = new PortingRequestSequence.Repeats(); //creates a new repeats for PortingRequestSequence
         List<PortingRequestSequenceV2> porseqv2list = message.getBody().getPortingrequest().getV2().getRepeats().getSeq(); //gets the list containing PortingRequestSequences from
         List<EnumProfileSequence> enumProSeqList = new ArrayList<>(); //creates an arraylist for EnumProfileSequence
+        List<PortingRequestSequence> portSeqList = new ArrayList<>(); //creates an arraylist for PortingRequestSequences
         int portSeqSize = porseqv2list.size(); //Creates an integer containing the ammount of elements of type PortingReqeuestSequence in class PortingRequest.Repeats
         //A loop that goes on as long as the value of count is smaller then the ammount of PortingRequestSequences that are in the XML message
         for (int cnt = 0; cnt < portSeqSize; cnt++) {
@@ -175,8 +177,10 @@ public class PrepForPostAndPost {
                 enumProSeq.setProfileid(currentEnumProSeq.getProfileid()); //sets profileid to the profileid that is contained in the xml annotated class
                 enumProSeqList.add(enumProSeq); //adds profilesequence
             }
+            portSeqList.add(portSeq);
         }
         portSeqRepeats.setSeq(enumProSeqList);
+        repeats.setSeq(portSeqList);
         return repeats;
     }
 

@@ -30,6 +30,17 @@
                             </seq>
                         </repeats>
                     </seq>
+                    <seq>
+                        <numberseries>
+                            <start>teststartwaarde</start>
+                            <end>testeindwaarde</end>
+                        </numberseries>
+                        <repeats>
+                            <seq>
+                                <profileid>testprofileId</profileid>
+                            </seq>
+                        </repeats>
+                    </seq>
                 </repeats>
             </v2>
         </portingrequest>
