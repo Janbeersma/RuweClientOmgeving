@@ -17,7 +17,7 @@ public class CustomerInfo {
     public String companyname;
     @JsonbProperty("housenr")
     public String housenr;
-    @JsonbProperty("housenrext")
+    @JsonbProperty(value = "housenrext", nillable = true)
     public String housenrext;
     @JsonbProperty("postcode")
     public String postcode;

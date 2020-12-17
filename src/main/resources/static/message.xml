@@ -41,6 +41,17 @@
                             </seq>
                         </repeats>
                     </seq>
+                    <seq>
+                        <numberseries>
+                            <start>teststartwaarde2</start>
+                            <end>testeindwaarde2</end>
+                        </numberseries>
+                        <repeats>
+                            <seq>
+                                <profileid>testprofileId2</profileid>
+                            </seq>
+                        </repeats>
+                    </seq>
                 </repeats>
             </v2>
         </portingrequest>

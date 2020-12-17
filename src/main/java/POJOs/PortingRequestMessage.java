@@ -3,7 +3,9 @@ package POJOs;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({"body", "header"})
+@JsonbPropertyOrder({
+        "body",
+        "header"})
 public class PortingRequestMessage {
 
     @JsonbProperty("body")
@@ -13,10 +15,6 @@ public class PortingRequestMessage {
 
     public PortingRequestMessage() {}
 
-    public PortingRequestMessage(PortingRequestBody body, PortingRequestHeader header) {
-        this.body = body;
-        this.header = header;
-    }
 
     public PortingRequestBody getBody() {
         return body;

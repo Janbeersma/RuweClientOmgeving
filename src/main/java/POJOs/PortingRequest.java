@@ -14,7 +14,7 @@ import java.util.List;
         "note",
         "repeats"})
 public class PortingRequest {
-    @JsonbProperty("dossierId")
+    @JsonbProperty("dossierid")
     public String dossierId;
     @JsonbProperty("recipientserviceprovider")
     public String recipientserviceprovider;

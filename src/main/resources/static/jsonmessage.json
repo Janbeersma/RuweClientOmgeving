@@ -1,0 +1,40 @@
+{
+  "body": {
+    "portingrequest" : {
+      "dossierid" : "151851516",
+      "recipientserviceprovider" : "BBB",
+      "recipientnetworkoperator" : "AAA",
+      "donornetworkoperator" : "CCC",
+      "donorserviceprovider" : "DDD",
+      "customerinfo" : {
+        "lastname" : "Hensen",
+        "companyname" : "Simyo",
+        "housenr" : "46",
+        "housenrext" : "",
+        "postcode" : "6448SI",
+        "customerid" : "545684856184"
+      },
+      "notes" : "dit is een mooie notitie",
+      "repeats" : {
+        "seq" : {
+          "numberseries" : {
+            "start" : "teststartwaarde1",
+            "end"  : "testeindwaarde"
+          }
+        }
+      }
+    }
+  },
+  "header" : {
+    "receiver" : {
+      "networkoperator" : "AAA",
+      "serviceprovider" : "BBB"
+    },
+    "sender" : {
+      "networkoperator" : "CCC",
+      "serviceprovider" : "DDD"
+    },
+    "timestamp" : "23:45:00"
+  }
+
+}

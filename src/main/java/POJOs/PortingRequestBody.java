@@ -3,7 +3,7 @@ package POJOs;
 import javax.json.bind.annotation.JsonbProperty;
 
 public class PortingRequestBody {
-    @JsonbProperty("portingRequest")
+    @JsonbProperty("portingrequest")
     public PortingRequest portingRequest;
 
     public PortingRequestBody() {}
