@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+//class die verantwoordelijk is voor het overzetten van de XML object attributen naar de JSON object attributen
 @Component
 public class PrepForPostAndPost {
     private static Client client;
@@ -42,6 +43,7 @@ public class PrepForPostAndPost {
         this.webTarget = webTarget;
     }
 
+    //de method die verantwoordelijk is voor het klaarmaken en versturen van een portingrequest
     public void PrepAndPost(Message unmarshalledXMLmessage) {
         Client client = getClientInstance();
         WebTarget webTarget = client.target("https://mbygpk4ss2.execute-api.us-east-1.amazonaws.com/test/number-portability/v1/dossiers").path("portingrequest");
@@ -92,20 +94,24 @@ public class PrepForPostAndPost {
         return client;
     }
 
+    //Post een portingrequestenvelope
     private void PortenvelopePost(PortEnv portEnv, Invocation.Builder invb) {
         Response response = invb.post(Entity.entity(portEnv, MediaType.APPLICATION_JSON_TYPE));
     }
 
+    //Maakt een invocation object voor het posten van JSON berichten
     public Invocation.Builder InvocationBuilderCreator(WebTarget webTarget) {
         Invocation.Builder invb = webTarget.request(MediaType.APPLICATION_JSON_TYPE);
         return invb;
     }
 
+    //Maakt een portingrequestenvelope
     public PortEnv PortEnvCreator(PortingRequestMessage message) {
         PortEnv portEnv = new PortEnv("15", "portforwarding", message);
         return portEnv;
     }
 
+    //Maakt een receiver vanuit de unmarshalled XML message
     public PortingRequestReceiver ReceiverCreator(Message message) {
         PortingRequestReceiver receiver = new PortingRequestReceiver();
         receiver.setNetworkoperator(message.getHeader().getReceiver().getNetworkoperator());
@@ -113,6 +119,7 @@ public class PrepForPostAndPost {
         return receiver;
     }
 
+    //Maakt een sender vanuit de unmarshalled XML message
     public PortingRequestSender SenderCreator(Message message) {
         PortingRequestSender sender = new PortingRequestSender();
         sender.setNetworkoperator(message.getHeader().getSender().getNetworkoperator());
@@ -120,6 +127,7 @@ public class PrepForPostAndPost {
         return sender;
     }
 
+    //maakt een header vanuit de unmarshalled XML message
     public PortingRequestHeader PortingRequestHeaderCreator(Message message, PortingRequestReceiver receiver, PortingRequestSender sender) {
         PortingRequestHeader header = new PortingRequestHeader();
         header.setReceiver(receiver);
@@ -128,12 +136,14 @@ public class PrepForPostAndPost {
         return header;
     }
 
+    //maakt een body
     public PortingRequestBody PortingRequestBodyCreator(PortingRequest portingRequest) {
         PortingRequestBody body = new PortingRequestBody();
         body.setPortingRequest(portingRequest);
         return body;
     }
 
+    //maakt een message vanuit de unmarshalled XML message
     private PortingRequestMessage PortingRequestMessageCreator(PortingRequestBody body, PortingRequestHeader header) {
         PortingRequestMessage message = new PortingRequestMessage();
         message.setBody(body);
@@ -141,6 +151,7 @@ public class PrepForPostAndPost {
         return message;
     }
 
+    //maakt een portingrequest vanuit de unmarshalled XML message
     public PortingRequest PortingRequestCreator(CustomerInfo customerInfo, Message message, PortingRequest.Repeats repeats) {
         PortingRequest portingRequest = new PortingRequest();
         PortingRequestV2 v2 = new PortingRequestV2();
@@ -184,6 +195,7 @@ public class PrepForPostAndPost {
         return repeats;
     }
 
+    //maakt een enumProfileSequence vanuit de unmarshalled XML message
     public EnumProfileSequence EnumProfileSequenceCreator(Message message) {
         EnumProfileSequence enumProfileSequence = new EnumProfileSequence();
         List<PortingRequestSequenceV2> portseqList = message.getBody().getPortingrequest().getV2().getRepeats().getSeq();
@@ -194,6 +206,7 @@ public class PrepForPostAndPost {
         return enumProfileSequence;
     }
 
+    //maakt customerInfo vanuit de unmarshalled XML message
     public CustomerInfo CustomerInfoCreator(Message message) {
         CustomerInfo customerInfo = new CustomerInfo();
         customerInfo.setLastname(message.getBody().getPortingrequest().getV2().getCustomerinfo().getLastname());

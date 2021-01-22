@@ -9,6 +9,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+//Dit is de class die verantwoordelijk is voor het opnemen van een XML Portingrequest message en het omzetten naar object attributen
 @Component
 public class XMLtoPOJOmarshaller {
     Message message;

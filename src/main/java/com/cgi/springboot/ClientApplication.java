@@ -15,6 +15,7 @@ import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+//dit is de main method waarvan uit alle andere methods worden aangeroepen
 @SpringBootApplication
 @RestController
 public class ClientApplication {
@@ -24,11 +25,7 @@ public class ClientApplication {
 		XMLtoPOJOmarshaller xmLtoPOJOmarshaller = new XMLtoPOJOmarshaller();
 		try {
 			Message unmarshalledXMLmessage = xmLtoPOJOmarshaller.marshalintoClass();
-//			List<PortingRequestSequenceV2> lijstje = unmarshalledXMLmessage.getBody().getPortingrequest().getV2().getRepeats().getSeq();
-//			PortingRequestSequenceV2 seq = lijstje.get(0);
-//			List<EnumProfileSequence> enumlist = seq.getRepeats().getSeq();
-//			EnumProfileSequence enumseq = enumlist.get(0);
-//			System.out.println(enumseq.getProfileid());
+
 			PrepForPostAndPost prepForPostAndPost = new PrepForPostAndPost();
 			prepForPostAndPost.PrepAndPost(unmarshalledXMLmessage);
 
